@@ -1,101 +1,97 @@
-import json
-import os
+task_list = []
+status_list = []
 
-TASKS_FILE = "tasks.json"
-
-
-def load_tasks():
-    """Load tasks from the JSON file if it exists."""
-    if os.path.exists(TASKS_FILE):
-        with open(TASKS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return []
-
-
-def save_tasks(tasks):
-    """Write the task list to the JSON file."""
-    with open(TASKS_FILE, "w", encoding="utf-8") as f:
-        json.dump(tasks, f, ensure_ascii=False, indent=2)
-
-
-def add_task(tasks):
-    title = input("Task title: ").strip()
-    if not title:
-        print("Title cannot be empty.")
-        return
-    tasks.append({"title": title, "done": False})
-    save_tasks(tasks)
-    print(f"'{title}' has been added.")
-
-
-def view_tasks(tasks):
-    if not tasks:
-        print("No tasks yet.")
-        return
-    print("\n--- Your Tasks ---")
-    for i, task in enumerate(tasks, start=1):
-        checkbox = "[x]" if task["done"] else "[ ]"
-        print(f"{i}. {checkbox} {task['title']}")
-    print("------------------")
-
-
-def complete_task(tasks):
-    view_tasks(tasks)
-    if not tasks:
-        return
+def load_my_tasks():
     try:
-        number = int(input("Number of the task to complete: "))
-        if 1 <= number <= len(tasks):
-            tasks[number - 1]["done"] = True
-            save_tasks(tasks)
-            print("Marked as done.")
-        else:
-            print("Invalid number.")
-    except ValueError:
-        print("Please enter a number.")
+        file = open("tasks.txt", "r")
+        for line in file:
+            clean_line = line.replace("\n", "")
+            
+            parts = clean_line.split(",")
+            
+            if len(parts) == 2:
+                task_list.append(parts[0])
+                status_list.append(parts[1])
+        file.close()
+    except:
+        pass
 
+def save_my_tasks():
+    file = open("tasks.txt", "w")
+    for i in range(len(task_list)):
+        file.write(task_list[i] + "," + status_list[i] + "\n")
+    file.close()
 
-def delete_task(tasks):
-    view_tasks(tasks)
-    if not tasks:
+def add_task():
+    name = input("Enter task name: ")
+    task_list.append(name)
+    status_list.append("Not Done")
+    save_my_tasks()
+    print("Task added successfully!")
+
+def view_tasks():
+    if len(task_list) == 0:
+        print("Your list is empty!")
         return
-    try:
-        number = int(input("Number of the task to delete: "))
-        if 1 <= number <= len(tasks):
-            removed = tasks.pop(number - 1)
-            save_tasks(tasks)
-            print(f"'{removed['title']}' has been deleted.")
-        else:
-            print("Invalid number.")
-    except ValueError:
-        print("Please enter a number.")
+        
+    print("\n--- Current Tasks ---")
+    for i in range(len(task_list)):
+        print(str(i + 1) + ". [" + status_list[i] + "] " + task_list[i])
+    print("--------------------")
 
+def mark_done():
+    view_tasks()
+    if len(task_list) == 0:
+        return
+        
+    choice = input("Enter the number of the task you finished: ")
+    index = int(choice) - 1
+    
+    if index >= 0 and index < len(task_list):
+        status_list[index] = "Done"
+        save_my_tasks()
+        print("Task marked as Done!")
+    else:
+        print("That number is not on the list!")
 
-def main_menu():
-    tasks = load_tasks()
-    while True:
-        print("\n=== Task Manager ===")
-        print("1 - Add task")
-        print("2 - View tasks")
-        print("3 - Mark task as done")
-        print("4 - Delete task")
-        print("5 - Quit")
-        choice = input("Choice: ").strip()
+def delete_task():
+    view_tasks()
+    if len(task_list) == 0:
+        return
+        
+    choice = input("Enter the number of the task to delete: ")
+    index = int(choice) - 1
+    
+    if index >= 0 and index < len(task_list):
+        del task_list[index]
+        del status_list[index]
+        save_my_tasks()
+        print("Task removed!")
+    else:
+        print("Invalid number layout selection!")
 
-        if choice == "1":
-            add_task(tasks)
-        elif choice == "2":
-            view_tasks(tasks)
-        elif choice == "3":
-            complete_task(tasks)
-        elif choice == "4":
-            delete_task(tasks)
-        elif choice == "5":
-            print("Bye!")
-            break
-        else:
-            print("Invalid choice.")
-
-
-if __name__ == "__main__":
-    main_menu()
+# --- MAIN LOOP RUNNER ---
+load_my_tasks()
+while True:
+    print("\n=== MENU ===")
+    print("1. Add Task")
+    print("2. View Tasks")
+    print("3. Finish Task")
+    print("4. Delete Task")
+    print("5. Exit")
+    
+    user_choice = input("Select an option (1-5): ")
+    
+    if user_choice == "1":
+        add_task()
+    elif user_choice == "2":
+        view_tasks()
+    elif user_choice == "3":
+        mark_done()
+    elif user_choice == "4":
+        delete_task()
+    elif user_choice == "5":
+        print("Goodbye!")
+        break
+    else:
+        print("Wrong input. Select from 1 to 5.")
