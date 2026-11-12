@@ -1,31 +1,32 @@
-Python Task Manager
-A beginner Python project for managing daily tasks. This project was created to practise Python programming fundamentals and develop practical problem-solving skills.
+# Python Task Manager
 
-Features:
-    > Add new tasks
-    > View all tasks
-    > Mark tasks as completed
-    > Delete tasks
+A simple task management application written in Python to practice core programming fundamentals, user input handling, and organizing tasks.
 
-Technologies Used:
-    > Python
+## What It Does
 
-Learning Objectives:
-    > Practise variables, functions, and conditional statements
-    > Work with lists and data structures
-    > Organize code into reusable functions
-    > Improve problem-solving and debugging skills
+- **Create & View Tasks:** Add new tasks and display your current task list.
+- **Manage Task Status:** Update or remove tasks as you complete your work.
+- **Lightweight Setup:** Runs directly with Python 3 without needing any third-party packages.
 
-Getting Started
-    1. Clone this repository.
-    2. Open the project folder in your terminal.
-    3. Run the Python application.
+## Built With
 
-Future Improvements
-    1. Save tasks to a file so they remain available after restarting the application
-    2. Add task priorities and due dates
-    3. Improve input validation and error handling
+- Python 3
 
-Author
-Sandip Begha
-GitHub: https://github.com/sandipbeghaa
+## How to Run It
+
+1. Make sure **Python 3** is installed on your computer.
+2. Clone or download this repository:
+   ```bash
+   git clone [https://github.com](https://github.com/sandipbeghaa/python-task-manager)
+   ```
+3. Open the folder and run the Python script:
+   ```bash
+   cd python-task-manager
+   python main.py
+   ```
+*(Note: Replace `main.py` with your exact `.py` filename inside the folder if it has a different name).*
+
+## Author
+
+- **GitHub:** [github.com/sandipbeghaa](https://github.com/sandipbeghaa)
+- **Portfolio:** [sandipbeghaa.github.io](https://sandipbeghaa.github.io/)
