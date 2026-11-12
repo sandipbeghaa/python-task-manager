@@ -24,7 +24,6 @@ A simple task management application written in Python to practice core programm
    cd python-task-manager
    python main.py
    ```
-*(Note: Replace `main.py` with your exact `.py` filename inside the folder if it has a different name).*
 
 ## Author
 
